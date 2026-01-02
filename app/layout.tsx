@@ -1,10 +1,10 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter, Playfair_Display, Montserrat } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
-import { generateMetadata as genMeta, generateStructuredData, siteConfig } from '@/lib/seo';
+import { siteConfig, generateOrganizationSchema } from '@/lib/seo';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -24,38 +24,54 @@ const montserrat = Montserrat({
   display: 'swap',
 });
 
-export const metadata: Metadata = genMeta({
-  title: 'Vantra | El Arte de Encontrar tu Hogar - Inmobiliaria de Lujo México',
-  description: 'Descubre propiedades exclusivas con Vantra. Curaduría inmobiliaria de lujo por Carlos Anaya Ruiz en Ciudad de México, Monterrey y Guadalajara. Casas, penthouses y departamentos premium.',
-});
+// Configuración correcta de Metadata para Next.js 14+
+export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: `${siteConfig.name} | ${siteConfig.tagline}`,
+    template: `%s | ${siteConfig.name}`, // Esto añade " | Vantra" automáticamente a las subpáginas
+  },
+  description: siteConfig.description,
+  authors: [{ name: siteConfig.author }],
+  creator: siteConfig.author,
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/icon.svg',
+    apple: '/apple-touch-icon.png',
+  },
+  manifest: '/manifest.json', // Recomendado crear route.ts dinámico o archivo estático
+  robots: {
+    index: true,
+    follow: true,
+  }
+};
+
+// Configuración correcta de Viewport para Next.js 14+
+export const viewport: Viewport = {
+  themeColor: '#C9A961',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+};
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const structuredData = generateStructuredData();
+  const structuredData = generateOrganizationSchema();
 
   return (
-    <html lang="es-MX" className={`${inter.variable} ${playfair.variable} ${montserrat.variable}`}>
+    <html lang="es-MX" className={`${inter.variable} ${playfair.variable} ${montserrat.variable} scroll-smooth`}>
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#C9A961" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="geo.region" content="MX" />
-        <meta name="geo.placename" content="México" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
       </head>
-      <body className="font-sans antialiased">
+      <body className="font-sans antialiased flex flex-col min-h-screen">
         <Navbar />
-        <main className="min-h-screen">
+        <main className="flex-grow">
           {children}
         </main>
         <Footer />
