@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&family=Rajdhani:wght@300;400;500;600;700&display=swap');
 
 @layer base {
   :root {
@@ -36,24 +36,56 @@
 }
 
 @layer components {
+  /* Efecto Glassmorphic 3D Base */
+  .glass-3d-effect {
+    @apply relative overflow-hidden backdrop-blur-[20px] transition-all duration-300;
+    background: rgba(255, 255, 255, 0.05); /* Base sutil */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    
+    /* Bordes para efecto 3D */
+    border-top: 1px solid rgba(255, 255, 255, 0.4);
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-3d-effect:hover {
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+  }
+
   .btn-primary {
-    @apply inline-flex items-center justify-center px-8 py-4 
-           bg-gradient-gold text-white font-semibold 
-           rounded-full shadow-gold transition-all duration-300
-           hover:shadow-lg hover:scale-105 active:scale-100;
+    @apply glass-3d-effect inline-flex items-center justify-center px-8 py-4 
+           text-white font-semibold font-rajdhani tracking-widest uppercase
+           rounded-full active:scale-95;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+
+  /* Variante dorada para destacar */
+  .btn-primary.gold {
+    background: rgba(201, 169, 97, 0.2);
+    border-color: rgba(201, 169, 97, 0.4);
+  }
+  .btn-primary.gold:hover {
+    background: rgba(201, 169, 97, 0.3);
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center px-8 py-4 
-           bg-white text-vantra-midnight font-semibold 
-           border-2 border-vantra-gold rounded-full 
-           transition-all duration-300
-           hover:bg-vantra-gold hover:text-white hover:shadow-gold;
+    @apply glass-3d-effect inline-flex items-center justify-center px-8 py-4 
+           text-vantra-midnight font-semibold font-rajdhani tracking-widest uppercase
+           rounded-full active:scale-95;
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+  
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.25);
   }
 
   .btn-ghost {
     @apply inline-flex items-center justify-center px-6 py-3 
-           text-vantra-gray-600 font-medium 
+           text-vantra-gray-600 font-medium font-rajdhani
            transition-all duration-300
            hover:text-vantra-gold;
   }
@@ -111,6 +143,10 @@
 }
 
 @layer utilities {
+  .font-rajdhani {
+    font-family: 'Rajdhani', sans-serif;
+  }
+
   .animate-delay-100 {
     animation-delay: 100ms;
   }
