@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import { siteConfig, generateOrganizationSchema } from '@/lib/seo';
+import { PropertyProvider } from '@/context/PropertyContext'; // Importación crítica
 
 const inter = Inter({
   subsets: ['latin'],
@@ -24,12 +25,11 @@ const montserrat = Montserrat({
   display: 'swap',
 });
 
-// Configuración correcta de Metadata para Next.js 14+
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
     default: `${siteConfig.name} | ${siteConfig.tagline}`,
-    template: `%s | ${siteConfig.name}`, // Esto añade " | Vantra" automáticamente a las subpáginas
+    template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
   authors: [{ name: siteConfig.author }],
@@ -39,14 +39,13 @@ export const metadata: Metadata = {
     shortcut: '/icon.svg',
     apple: '/apple-touch-icon.png',
   },
-  manifest: '/manifest.json', // Recomendado crear route.ts dinámico o archivo estático
+  manifest: '/manifest.json',
   robots: {
     index: true,
     follow: true,
   }
 };
 
-// Configuración correcta de Viewport para Next.js 14+
 export const viewport: Viewport = {
   themeColor: '#C9A961',
   width: 'device-width',
@@ -70,12 +69,14 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans antialiased flex flex-col min-h-screen">
-        <Navbar />
-        <main className="flex-grow">
-          {children}
-        </main>
-        <Footer />
-        <WhatsAppButton />
+        <PropertyProvider>
+          <Navbar />
+          <main className="flex-grow">
+            {children}
+          </main>
+          <Footer />
+          <WhatsAppButton />
+        </PropertyProvider>
       </body>
     </html>
   );

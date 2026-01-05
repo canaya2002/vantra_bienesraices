@@ -1,43 +1,33 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Property, FilterState } from '@/types';
+import { Property } from '@/types';
 import PropertyCard from './PropertyCard';
-import { priceRange, squareMetersRange } from '@/data/properties';
+import { useProperty } from '@/context/PropertyContext';
 
 interface PropertyGridProps {
   properties: Property[];
 }
 
-const initialFilters: FilterState = {
-  city: '',
-  minPrice: priceRange.min,
-  maxPrice: priceRange.max,
-  minSquareMeters: squareMetersRange.min,
-  maxSquareMeters: squareMetersRange.max,
-  bedrooms: 0,
-  propertyType: '',
-};
-
 export default function PropertyGrid({ properties }: PropertyGridProps) {
-  const [filters, setFilters] = useState<FilterState>(initialFilters);
+  const { filters } = useProperty();
 
   const filteredProperties = useMemo(() => {
     return properties.filter(property => {
-      // City filter
+      // Filtro Ciudad
       if (filters.city && property.city !== filters.city) return false;
       
-      // Property type filter
+      // Filtro Tipo
       if (filters.propertyType && property.propertyType !== filters.propertyType) return false;
       
-      // Bedrooms filter
+      // Filtro Recámaras
       if (filters.bedrooms > 0 && property.bedrooms < filters.bedrooms) return false;
       
-      // Price filter
+      // Filtro Precio
       if (property.price < filters.minPrice || property.price > filters.maxPrice) return false;
       
-      // Square meters filter
+      // Filtro Metros Cuadrados
       if (property.squareMeters < filters.minSquareMeters || property.squareMeters > filters.maxSquareMeters) return false;
       
       return true;
@@ -47,7 +37,6 @@ export default function PropertyGrid({ properties }: PropertyGridProps) {
   return (
     <section id="propiedades" className="section-padding bg-vantra-gray-50">
       <div className="container-custom">
-        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -67,7 +56,6 @@ export default function PropertyGrid({ properties }: PropertyGridProps) {
           </p>
         </motion.div>
 
-        {/* Results Count */}
         <div className="flex items-center justify-between mb-8">
           <p className="text-vantra-gray-600">
             <span className="font-semibold text-vantra-midnight">{filteredProperties.length}</span>
@@ -75,7 +63,6 @@ export default function PropertyGrid({ properties }: PropertyGridProps) {
           </p>
         </div>
 
-        {/* Properties Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           <AnimatePresence mode="popLayout">
             {filteredProperties.map((property, index) => (
@@ -93,7 +80,6 @@ export default function PropertyGrid({ properties }: PropertyGridProps) {
           </AnimatePresence>
         </div>
 
-        {/* No Results */}
         {filteredProperties.length === 0 && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -111,12 +97,6 @@ export default function PropertyGrid({ properties }: PropertyGridProps) {
             <p className="text-vantra-gray-500 mb-6">
               Intenta ajustar los filtros para ver más resultados.
             </p>
-            <button
-              onClick={() => setFilters(initialFilters)}
-              className="btn-secondary"
-            >
-              Limpiar filtros
-            </button>
           </motion.div>
         )}
       </div>
