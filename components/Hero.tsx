@@ -109,25 +109,6 @@ export default function Hero() {
         )}
       </AnimatePresence>
 
-      {/* Indicador de Scroll - También aparece después */}
-      {isIntroFinished && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 1 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
-        >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-            className="flex flex-col items-center gap-2 text-white/60"
-          >
-            <span className="text-xs uppercase tracking-wider">Scroll</span>
-            <ChevronDown className="w-5 h-5" />
-          </motion.div>
-        </motion.div>
-      )}
-
       {/* Elementos Decorativos (Destellos) */}
       <div className="absolute top-0 left-0 w-64 h-64 bg-vantra-gold/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-vantra-gold/5 rounded-full blur-3xl pointer-events-none" />
