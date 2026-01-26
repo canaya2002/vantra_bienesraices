@@ -119,6 +119,7 @@ export default function CTASection() {
             <h3 className="text-xl font-display font-semibold text-vantra-midnight mb-6">
               Envíanos un mensaje
             </h3>
+            {/* Como las props ahora son opcionales en ContactForm, esto ya no da error */}
             <ContactForm />
           </motion.div>
         </div>

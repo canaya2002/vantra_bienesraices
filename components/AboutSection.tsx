@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useRef, useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, useSpring, useInView, useMotionValue, useMotionTemplate, AnimatePresence } from 'framer-motion';
-import { Award, Users, Building, Heart, ArrowRight, CheckCircle2, Sparkles, TrendingUp } from 'lucide-react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { Award, Users, Building, Heart, ArrowRight, CheckCircle2, Sparkles, LucideIcon } from 'lucide-react';
 
 // --- CONFIGURACIÓN DE ANIMACIONES ---
 const ANIMATION_CONFIG = {
@@ -62,8 +62,16 @@ const FlipWords = () => {
   );
 };
 
+// --- INTERFAZ PARA LAS PROPS DE LA TARJETA ---
+interface NeonStatCardProps {
+  icon: LucideIcon;
+  value: string;
+  label: string;
+  delay: number;
+}
+
 // --- COMPONENTE: TARJETA CON BORDE NEÓN EN MOVIMIENTO ---
-const NeonStatCard = ({ icon: Icon, value, label, delay }) => {
+const NeonStatCard = ({ icon: Icon, value, label, delay }: NeonStatCardProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -131,6 +139,7 @@ export default function AboutSection() {
                transition={{ duration: 1, ease: "easeOut" }}
                className="relative z-10 aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl shadow-slate-900/10"
              >
+                {/* Nota: Usamos <img> estándar por simplicidad, en Next.js idealmente usa <Image /> */}
                 <img
                   src="/images/carlos-anaya.jpg" 
                   alt="Carlos Anaya" 

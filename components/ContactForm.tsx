@@ -1,13 +1,25 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, FormEvent, ChangeEvent } from 'react';
 import { motion } from 'framer-motion';
-import { Send, Check, Loader2, User, Mail, Phone, MessageSquare, ArrowRight } from 'lucide-react';
-// Usamos <a> estándar para evitar dependencias externas en este entorno, 
-// en tu proyecto real puedes usar Link de next/link si prefieres.
+import { Check, Loader2, User, Mail, Phone, MessageSquare, ArrowRight } from 'lucide-react';
 
-export default function ContactForm({ propertyId, propertyTitle }) {
-  const [formData, setFormData] = useState({
+interface ContactFormProps {
+  propertyId?: string;
+  propertyTitle?: string;
+}
+
+interface FormData {
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+  propertyId?: string;
+  propertyTitle?: string;
+}
+
+export default function ContactForm({ propertyId, propertyTitle }: ContactFormProps) {
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     phone: '',
@@ -18,10 +30,11 @@ export default function ContactForm({ propertyId, propertyTitle }) {
     propertyTitle,
   });
   
-  const [status, setStatus] = useState('idle');
-  const [focusedField, setFocusedField] = useState(null);
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle');
+  // Se tipa explícitamente para permitir strings o null
+  const [focusedField, setFocusedField] = useState<string | null>(null);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setStatus('loading');
     await new Promise(resolve => setTimeout(resolve, 2000));
@@ -34,7 +47,7 @@ export default function ContactForm({ propertyId, propertyTitle }) {
     }, 4000);
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
@@ -58,7 +71,6 @@ export default function ContactForm({ propertyId, propertyTitle }) {
   }
 
   return (
-    // Eliminado el contenedor bg-white, shadow, border. Ahora es transparente y fluido.
     <motion.form 
       onSubmit={handleSubmit}
       initial={{ opacity: 0, y: 20 }}
