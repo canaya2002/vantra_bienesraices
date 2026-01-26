@@ -38,6 +38,7 @@ export default function Hero() {
       element.scrollIntoView({ behavior: 'smooth' });
     }
   };
+  
 
   return (
     <section className="relative h-screen min-h-[700px] flex items-center overflow-hidden">
