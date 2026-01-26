@@ -1,5 +1,16 @@
 import Link from 'next/link';
+import { Metadata } from 'next'; // Importación añadida
 import { ArrowLeft, Home } from 'lucide-react';
+
+// Metadata para la página 404
+export const metadata: Metadata = {
+  title: 'Página no encontrada | Vantra',
+  description: 'Lo sentimos, la propiedad que buscas no está disponible.',
+  robots: {
+    index: false, // IMPORTANTE: No queremos indexar errores
+    follow: false,
+  },
+};
 
 export default function NotFound() {
   return (

@@ -1,48 +1,71 @@
 import { Metadata } from 'next';
 import { Property } from '@/types';
 
+// 1. Configuración Maestra con datos de E-E-A-T
 export const siteConfig = {
-  name: 'Vantra',
+  name: 'Vantra Bienes Raíces',
+  shortName: 'Vantra',
   tagline: 'El Arte de Encontrar tu Hogar',
-  description: 'Curaduría inmobiliaria de lujo por Carlos Anaya Ruiz. Propiedades exclusivas en Ciudad de México, Monterrey y Guadalajara.',
-  url: 'https://vantra.mx', // Asegúrate de cambiar esto a tu dominio real en producción
+  description: 'Curaduría inmobiliaria de lujo por Carlos Anaya Ruiz. Propiedades exclusivas, venta y renta en Ciudad de México, Monterrey y Guadalajara.',
+  url: 'https://vantra.mx', // IMPORTANTE: Cambiar al dominio real producción
   author: 'Carlos Anaya Ruiz',
+  authorUrl: 'https://vantra.mx/sobre-mi', // URL del perfil del autor (ideal para E-E-A-T)
   phone: '+52 55 5555 5555',
   email: 'contacto@vantra.mx',
+  address: {
+    street: 'Av. Presidente Masaryk', // Dirección física real ayuda mucho al SEO Local
+    city: 'Ciudad de México',
+    region: 'CDMX',
+    postalCode: '11560',
+    country: 'MX'
+  },
   social: {
     instagram: 'https://instagram.com/vantra.mx',
-    facebook: 'https://facebook.com/VantraInmobiliaria'
-  }
+    facebook: 'https://facebook.com/VantraInmobiliaria',
+    linkedin: 'https://linkedin.com/company/vantra',
+    twitter: 'https://twitter.com/vantra_mx'
+  },
+  // IDs de verificación (Terceros)
+  googleVerification: 'TU_CODIGO_DE_SEARCH_CONSOLE', // Te diré cómo obtenerlo abajo
 };
 
 export const baseKeywords = [
   'inmobiliaria de lujo',
   'bienes raíces México',
-  'casas de lujo',
-  'propiedades exclusivas',
-  'departamentos premium',
-  'penthouses México',
-  'inmuebles Ciudad de México',
-  'casas Monterrey',
-  'propiedades Guadalajara',
   'Carlos Anaya Ruiz',
-  'Vantra inmobiliaria',
-  'real estate Mexico',
-  'luxury homes Mexico',
-  'inversión inmobiliaria',
-  'residencias de lujo'
+  'propiedades exclusivas',
+  'agente inmobiliario de lujo',
+  'venta de casas premium',
+  'departamentos en polanco',
+  'residencias en san pedro',
+  'inversión inmobiliaria'
 ];
 
-// Generador base de metadata
+// 2. Generador de Metadata Base (Super Potenciado)
 export function generateMetadata(customMeta?: Partial<Metadata>): Metadata {
   return {
-    title: customMeta?.title || siteConfig.name,
+    metadataBase: new URL(siteConfig.url),
+    title: {
+      default: `${siteConfig.name} | ${siteConfig.tagline}`,
+      template: `%s | ${siteConfig.name}`, // Plantilla para páginas internas
+    },
     description: customMeta?.description || siteConfig.description,
     keywords: baseKeywords.join(', '),
-    authors: [{ name: siteConfig.author }],
+    authors: [{ name: siteConfig.author, url: siteConfig.authorUrl }],
     creator: siteConfig.author,
     publisher: siteConfig.name,
-    metadataBase: new URL(siteConfig.url),
+    formatDetection: {
+      email: false,
+      address: false,
+      telephone: false,
+    },
+    // Verificación para herramientas de Webmaster
+    verification: {
+      google: siteConfig.googleVerification,
+    },
+    alternates: {
+      canonical: '/', // Se sobreescribe en páginas internas
+    },
     openGraph: {
       type: 'website',
       locale: 'es_MX',
@@ -52,7 +75,7 @@ export function generateMetadata(customMeta?: Partial<Metadata>): Metadata {
       description: customMeta?.description as string || siteConfig.description,
       images: [
         {
-          url: '/images/og-image.jpg',
+          url: '/images/og-image.jpg', // Asegúrate de tener esta imagen en public/images/
           width: 1200,
           height: 630,
           alt: `${siteConfig.name} - ${siteConfig.tagline}`
@@ -63,6 +86,7 @@ export function generateMetadata(customMeta?: Partial<Metadata>): Metadata {
       card: 'summary_large_image',
       title: customMeta?.title as string || siteConfig.name,
       description: customMeta?.description as string || siteConfig.description,
+      creator: '@vantra_mx', // Tu usuario de twitter si tienes
       images: ['/images/og-image.jpg']
     },
     robots: {
@@ -73,120 +97,124 @@ export function generateMetadata(customMeta?: Partial<Metadata>): Metadata {
         follow: true,
         'max-video-preview': -1,
         'max-image-preview': 'large',
-        'max-snippet': -1
-      }
+        'max-snippet': -1,
+      },
     },
     ...customMeta
   };
 }
 
-// Generador de metadata para propiedades individuales
+// 3. Generador Metadata para Propiedades (Canonical dinámico + OG Images)
 export function generatePropertyMetadata(property: Property): Metadata {
   const title = `${property.title} | ${property.city}`;
-  const description = `${property.shortDescription} ${property.bedrooms} recámaras, ${property.bathrooms} baños, ${property.squareMeters}m² en ${property.neighborhood}. Precio: ${property.priceFormatted}.`;
+  const description = `${property.shortDescription} Ubicada en ${property.neighborhood}. Precio: ${property.priceFormatted}. Contacta a Carlos Anaya Ruiz.`;
   
-  const keywords = [
-    ...baseKeywords,
-    property.city,
-    property.neighborhood,
-    property.propertyType,
-    `${property.bedrooms} recámaras`,
-    `casa en ${property.city}`,
-    `propiedad ${property.neighborhood}`,
-    ...property.features.slice(0, 5)
-  ];
+  // Usamos la imagen principal de la propiedad para compartir en redes
+  const ogImage = property.mainImage;
 
   return {
     title,
     description,
-    keywords: keywords.join(', '),
+    keywords: [
+      ...baseKeywords,
+      property.city,
+      property.neighborhood,
+      property.propertyType,
+      `venta de ${property.propertyType.toLowerCase()}`,
+      property.address
+    ].join(', '),
     alternates: {
       canonical: `/propiedades/${property.slug}`,
     },
     openGraph: {
-      type: 'article',
+      type: 'article', // 'article' o 'website'
       locale: 'es_MX',
       url: `${siteConfig.url}/propiedades/${property.slug}`,
       siteName: siteConfig.name,
       title,
       description,
-      images: property.images.map(img => ({
-        url: img.url,
-        width: 1200,
-        height: 630,
-        alt: img.alt
-      }))
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: property.title
+        }
+      ],
+      authors: [siteConfig.author],
+      publishedTime: property.createdAt,
+      modifiedTime: property.updatedAt,
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: [property.mainImage]
+      images: [ogImage]
     }
   };
 }
 
-// Schema: Agente Inmobiliario (Organization/Person)
+// --- SCHEMA.ORG GENERATORS (DATOS ESTRUCTURADOS) ---
+
+// Schema de Organización (Para el Home)
 export function generateOrganizationSchema() {
   return {
     '@context': 'https://schema.org',
-    '@type': 'RealEstateAgent',
+    '@type': 'RealEstateAgent', // Más específico que Organization
     name: siteConfig.name,
-    description: siteConfig.description,
+    image: `${siteConfig.url}/images/vantralogo.png`,
+    '@id': siteConfig.url,
     url: siteConfig.url,
     telephone: siteConfig.phone,
     email: siteConfig.email,
-    image: `${siteConfig.url}/images/og-image.jpg`,
     address: {
       '@type': 'PostalAddress',
-      addressCountry: 'MX'
+      streetAddress: siteConfig.address.street,
+      addressLocality: siteConfig.address.city,
+      postalCode: siteConfig.address.postalCode,
+      addressCountry: siteConfig.address.country
     },
+    priceRange: '$$$$', // Indica que es lujo
     founder: {
       '@type': 'Person',
-      name: siteConfig.author
+      name: siteConfig.author,
+      url: siteConfig.authorUrl
     },
     sameAs: [
       siteConfig.social.instagram,
-      siteConfig.social.facebook
+      siteConfig.social.facebook,
+      siteConfig.social.linkedin
     ]
   };
 }
 
-// Schema: Breadcrumbs (Migas de pan)
-export function generateBreadcrumbSchema(items: { name: string; url: string }[]) {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: items.map((item, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name: item.name,
-      item: `${siteConfig.url}${item.url}`
-    }))
-  };
-}
-
-// Schema: Propiedad Individual
+// Schema de Propiedad Individual (Product / RealEstateListing)
 export function generatePropertySchema(property: Property) {
   return {
     '@context': 'https://schema.org',
-    '@type': ['RealEstateListing', 'Product'], // Doble tipo para mejor cobertura
+    '@type': 'RealEstateListing',
     name: property.title,
     description: property.description,
     url: `${siteConfig.url}/propiedades/${property.slug}`,
-    image: property.images.map(img => img.url),
-    offers: {
+    image: property.images.map(img => `${siteConfig.url}${img.url}`),
+    datePosted: property.createdAt,
+    offer: {
       '@type': 'Offer',
       price: property.price,
       priceCurrency: 'MXN',
       availability: 'https://schema.org/InStock',
-      url: `${siteConfig.url}/propiedades/${property.slug}`
+      url: `${siteConfig.url}/propiedades/${property.slug}`,
+      seller: {
+        '@type': 'RealEstateAgent',
+        name: siteConfig.author,
+        image: `${siteConfig.url}/images/carlos-anaya.jpg`
+      }
     },
     address: {
       '@type': 'PostalAddress',
       streetAddress: property.address,
       addressLocality: property.city,
-      addressRegion: property.city, // Simplificado para este ejemplo
+      addressRegion: property.city,
       addressCountry: 'MX'
     },
     geo: {
@@ -199,12 +227,26 @@ export function generatePropertySchema(property: Property) {
     floorSize: {
       '@type': 'QuantitativeValue',
       value: property.squareMeters,
-      unitCode: 'MTK'
+      unitCode: 'MTK' // Metros Cuadrados
     },
     amenityFeature: property.features.map(feature => ({
       '@type': 'LocationFeatureSpecification',
       name: feature,
       value: true
+    }))
+  };
+}
+
+// Schema Breadcrumb (Migas de pan - Muy importante para Google)
+export function generateBreadcrumbSchema(items: { name: string; url: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: `${siteConfig.url}${item.url}`
     }))
   };
 }

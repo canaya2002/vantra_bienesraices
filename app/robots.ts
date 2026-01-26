@@ -6,7 +6,11 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/private/', '/admin/'], // Ejemplo de rutas protegidas
+      disallow: [
+        '/private/', 
+        '/admin/', 
+        '/api/'
+      ],
     },
     sitemap: `${siteConfig.url}/sitemap.xml`,
   };
