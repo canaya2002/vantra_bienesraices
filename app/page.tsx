@@ -1,5 +1,5 @@
 import Hero from '@/components/Hero';
-import AboutSection from '@/components/AboutSection';
+import MexicoMap from '@/components/MexicoMap'; // Importar Mapa
 import PropertySearch from '@/components/PropertySearch';
 import PropertyGrid from '@/components/PropertyGrid';
 import CTASection from '@/components/CTASection';
@@ -7,7 +7,6 @@ import { properties } from '@/data/properties';
 import { siteConfig } from '@/lib/seo';
 
 export default function Home() {
-  // Schema adicional para el Home: WebSite (Search Box potential)
   const websiteSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
@@ -26,10 +25,18 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
       />
+      
+      {/* 1. Hero Limpio */}
       <Hero />
-      <AboutSection />
+      
+      {/* 2. Sección Mapa Interactivo (Nueva Ubicación) */}
+      <MexicoMap />
+      
+      {/* 3. Buscador y Grid */}
       <PropertySearch />
       <PropertyGrid properties={properties} />
+      
+      {/* 4. CTA Final */}
       <CTASection />
     </>
   );

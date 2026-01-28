@@ -130,12 +130,7 @@ export default function Hero() {
                     <ChevronDown className="w-5 h-5 ml-2 group-hover:translate-y-1 transition-transform" />
                   </button>
                   
-                  <a
-                    href="#sobre-mi"
-                    className="btn-secondary w-full sm:w-auto text-center bg-white/5 border-white/20 text-white hover:bg-white hover:text-vantra-midnight backdrop-blur-sm transition-all duration-300"
-                  >
-                    Conocer más
-                  </a>
+                  {/* Se ha eliminado el botón "Conocer más" que apuntaba a #sobre-mi */}
                 </motion.div>
             </div>
           </div>

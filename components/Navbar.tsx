@@ -82,7 +82,6 @@ const bedroomOptions = [1, 2, 3, 4, 5];
 
 const navLinks = [
   { href: '/', label: 'Inicio' },
-  { href: '#sobre-mi', label: 'Sobre Mí' },
   { href: '#propiedades', label: 'Propiedades' },
   { href: '#contacto', label: 'Contacto' },
 ];

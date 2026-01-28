@@ -11,7 +11,6 @@ const footerLinks = {
     { label: 'Ver todo el catálogo', href: '/#propiedades' },
   ],
   empresa: [
-    { label: 'Sobre Carlos Anaya', href: '/#sobre-mi' },
     { label: 'Contacto Directo', href: '/#contacto' },
     { label: 'Política de Privacidad', href: '/privacidad' },
   ],

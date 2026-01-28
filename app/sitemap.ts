@@ -5,7 +5,6 @@ import { siteConfig } from '@/lib/seo';
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteConfig.url;
 
-  // 1. Páginas estáticas principales
   const routes = [
     {
       url: baseUrl,
@@ -13,12 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly' as const,
       priority: 1,
     },
-    {
-      url: `${baseUrl}/sobre-mi`, // ¡NUEVA!
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.8, // Alta prioridad porque define tu autoridad
-    },
+    // Eliminada la ruta /sobre-mi
     {
       url: `${baseUrl}/privacidad`,
       lastModified: new Date(),
@@ -27,7 +21,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  // 2. Páginas dinámicas de propiedades
   const propertyRoutes = properties.map((property) => ({
     url: `${baseUrl}/propiedades/${property.slug}`,
     lastModified: property.updatedAt || new Date().toISOString(),
