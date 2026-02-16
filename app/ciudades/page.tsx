@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { cities } from '@/data/cities';
 import { properties } from '@/data/properties';
 import { generateBreadcrumbSchema } from '@/lib/seo';
@@ -45,10 +46,12 @@ export default function CiudadesPage() {
                   className="group rounded-2xl overflow-hidden bg-white shadow-soft hover:shadow-soft-lg transition-all"
                 >
                   <div className="relative aspect-[3/2] overflow-hidden">
-                    <img
+                    <Image
                       src={city.image}
                       alt={`Propiedades de lujo en ${city.name}`}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      sizes="(max-width: 768px) 100vw, 33vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                     <div className="absolute bottom-4 left-4 right-4">

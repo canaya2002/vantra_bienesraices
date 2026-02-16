@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { MapPin, Phone, Mail, Instagram, Facebook, Linkedin, ArrowUp } from 'lucide-react';
 
 const footerLinks = {
@@ -38,9 +39,11 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link href="/" className="inline-block mb-4">
-              <img
+              <Image
                 src="/images/vantralogo.png"
                 alt="Vantra Bienes Raíces"
+                width={160}
+                height={40}
                 className="h-10 w-auto brightness-0 invert"
               />
             </Link>

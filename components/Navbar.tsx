@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Menu, X, MessageCircle, ChevronDown } from 'lucide-react';
 
 const navLinks = [
@@ -48,11 +49,13 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="relative z-50 flex-shrink-0">
             <div className="relative w-36 h-10 sm:w-44 sm:h-12">
-              <img
+              <Image
                 src="/images/vantralogo.png"
                 alt="Vantra Bienes Raíces"
-                className="w-full h-full object-contain object-left transition-all duration-300"
+                fill
+                className="object-contain object-left transition-all duration-300"
                 style={{ filter: isScrolled ? 'none' : 'brightness(0) invert(1)' }}
+                priority
               />
             </div>
           </Link>

@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { blogPosts, getBlogPostBySlug } from '@/data/blog';
 import { generateBlogMetadata, generateArticleSchema, generateBreadcrumbSchema } from '@/lib/seo';
 import Breadcrumb from '@/components/Breadcrumb';
@@ -86,7 +87,7 @@ export default async function BlogPostPage({ params }: Props) {
           </header>
 
           <div className="relative aspect-[16/9] rounded-2xl overflow-hidden mb-10">
-            <img src={post.image} alt={post.imageAlt} className="w-full h-full object-cover" />
+            <Image src={post.image} alt={post.imageAlt} fill className="object-cover" sizes="(max-width: 768px) 100vw, 700px" priority />
           </div>
 
           <div className="prose-vantra">{renderContent(post.content)}</div>

@@ -7,6 +7,7 @@ import { properties } from '@/data/properties';
 import { cities } from '@/data/cities';
 import { generateFAQSchema } from '@/lib/seo';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight, Home, Key, TrendingUp, Shield, MapPin } from 'lucide-react';
 
 export default function HomePage() {
@@ -73,10 +74,12 @@ export default function HomePage() {
                 href={`/ciudades/${city.slug}`}
                 className="group relative aspect-[3/2] rounded-2xl overflow-hidden"
               >
-                <img
+                <Image
                   src={city.image}
                   alt={`Propiedades en ${city.name}`}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  sizes="(max-width: 768px) 100vw, 33vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-6">

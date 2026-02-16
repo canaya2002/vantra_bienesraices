@@ -28,7 +28,7 @@ export default function AvisoPrivacidadPage() {
         <div className="text-vantra-gray-600 leading-relaxed space-y-6">
           <section>
             <h2 className="font-display text-xl font-semibold text-vantra-midnight mb-3">1. Identidad del Responsable</h2>
-            <p>Vantra Bienes Raíces (en adelante "Vantra"), con domicilio en Ciudad de México, México, es responsable del uso y protección de sus datos personales, y al respecto le informamos lo siguiente. Este Aviso de Privacidad cumple con lo dispuesto en la Ley Federal de Protección de Datos Personales en Posesión de los Particulares.</p>
+            <p>Vantra Bienes Raíces (en adelante &ldquo;Vantra&rdquo;), con domicilio en Ciudad de México, México, es responsable del uso y protección de sus datos personales, y al respecto le informamos lo siguiente. Este Aviso de Privacidad cumple con lo dispuesto en la Ley Federal de Protección de Datos Personales en Posesión de los Particulares.</p>
           </section>
 
           <section>

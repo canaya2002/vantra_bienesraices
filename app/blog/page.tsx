@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { blogPosts } from '@/data/blog';
 import { generateBreadcrumbSchema } from '@/lib/seo';
 import Breadcrumb from '@/components/Breadcrumb';
@@ -40,10 +41,12 @@ export default function BlogPage() {
                 className="group rounded-2xl overflow-hidden bg-white shadow-soft hover:shadow-soft-lg transition-all"
               >
                 <div className="relative aspect-[16/9] overflow-hidden">
-                  <img
+                  <Image
                     src={post.image}
                     alt={post.imageAlt}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                   <span className="absolute top-4 left-4 px-3 py-1 bg-white/90 text-vantra-midnight text-xs font-semibold rounded-full">
                     {post.category}

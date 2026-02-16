@@ -28,7 +28,7 @@ export default function TerminosPage() {
         <div className="text-vantra-gray-600 leading-relaxed space-y-6">
           <section>
             <h2 className="font-display text-xl font-semibold text-vantra-midnight mb-3">1. Aceptación de los Términos</h2>
-            <p>Al acceder y utilizar el sitio web de Vantra Bienes Raíces (en adelante "el Sitio"), usted acepta los presentes Términos y Condiciones. Si no está de acuerdo con alguno de ellos, le recomendamos no utilizar el Sitio.</p>
+            <p>Al acceder y utilizar el sitio web de Vantra Bienes Raíces (en adelante &ldquo;el Sitio&rdquo;), usted acepta los presentes Términos y Condiciones. Si no está de acuerdo con alguno de ellos, le recomendamos no utilizar el Sitio.</p>
           </section>
 
           <section>

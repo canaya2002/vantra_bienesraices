@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import Image from 'next/image';
 import { cities, getCityBySlug } from '@/data/cities';
 import { properties } from '@/data/properties';
 import { generateBreadcrumbSchema, generateItemListSchema } from '@/lib/seo';
@@ -51,10 +52,13 @@ export default async function CiudadPage({ params }: Props) {
 
         {/* Hero */}
         <section className="relative h-[40vh] min-h-[300px] flex items-end overflow-hidden mb-8">
-          <img
+          <Image
             src={city.image}
             alt={`Propiedades de lujo en ${city.name}`}
-            className="absolute inset-0 w-full h-full object-cover"
+            fill
+            className="object-cover"
+            sizes="100vw"
+            priority
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8 w-full">

@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import Link from 'next/link';
 import { getPropertyBySlug, properties } from '@/data/properties';
 import { generatePropertyMetadata, generatePropertySchema, generateBreadcrumbSchema } from '@/lib/seo';
 import PropertyGallery from '@/components/PropertyGallery';
