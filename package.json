@@ -1,7 +1,7 @@
 {
   "name": "vantra-real-estate",
   "version": "1.0.0",
-  "description": "Vantra - El Arte de Encontrar tu Hogar | Curaduría inmobiliaria por Carlos Anaya Ruiz",
+  "description": "Vantra – Inmobiliaria de lujo en México. Venta y renta de propiedades exclusivas.",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -10,7 +10,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@next/third-parties": "^16.1.5",
     "clsx": "^2.1.1",
     "framer-motion": "^11.18.2",
     "lucide-react": "^0.453.0",

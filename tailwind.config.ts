@@ -1,4 +1,4 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: [
@@ -28,8 +28,8 @@ const config: Config = {
             700: '#374151',
             800: '#1F2937',
             900: '#111827',
-          }
-        }
+          },
+        },
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
@@ -41,7 +41,7 @@ const config: Config = {
         'slide-up': 'slideUp 0.8s ease-out forwards',
         'slide-down': 'slideDown 0.5s ease-out forwards',
         'scale-in': 'scaleIn 0.5s ease-out forwards',
-        'float': 'float 6s ease-in-out infinite',
+        float: 'float 6s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: {
@@ -66,17 +66,19 @@ const config: Config = {
         },
       },
       boxShadow: {
-        'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
-        'soft-lg': '0 10px 40px -10px rgba(0, 0, 0, 0.1), 0 4px 25px -5px rgba(0, 0, 0, 0.04)',
-        'gold': '0 4px 20px -5px rgba(201, 169, 97, 0.4)',
+        soft: '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
+        'soft-lg':
+          '0 10px 40px -10px rgba(0, 0, 0, 0.1), 0 4px 25px -5px rgba(0, 0, 0, 0.04)',
+        gold: '0 4px 20px -5px rgba(201, 169, 97, 0.4)',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-gold': 'linear-gradient(135deg, #C9A961 0%, #D4BC7D 50%, #A68B4B 100%)',
+        'gradient-gold':
+          'linear-gradient(135deg, #C9A961 0%, #D4BC7D 50%, #A68B4B 100%)',
       },
     },
   },
   plugins: [],
-}
+};
 
-export default config
+export default config;

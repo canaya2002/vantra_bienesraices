@@ -2,7 +2,6 @@
 
 import { createContext, useContext, useState, ReactNode } from 'react';
 
-// Definición de tipos para los filtros
 export interface FilterState {
   city: string;
   minPrice: number;
@@ -11,54 +10,47 @@ export interface FilterState {
   maxSquareMeters: number;
   bedrooms: number;
   propertyType: string;
+  operation: string;
 }
 
-// Interfaz del contexto
 interface PropertyContextType {
   filters: FilterState;
   setFilters: (filters: FilterState) => void;
-  updateFilter: (key: keyof FilterState, value: any) => void;
+  updateFilter: (key: keyof FilterState, value: string | number) => void;
   isNavSearchVisible: boolean;
   setIsNavSearchVisible: (visible: boolean) => void;
 }
 
-// Valores iniciales
 const initialFilters: FilterState = {
   city: '',
   minPrice: 0,
-  maxPrice: 50000000,
-  minSquareMeters: 50,
+  maxPrice: 100000000,
+  minSquareMeters: 0,
   maxSquareMeters: 5000,
   bedrooms: 0,
   propertyType: '',
+  operation: '',
 };
 
-// Creación del contexto
 const PropertyContext = createContext<PropertyContextType | undefined>(undefined);
 
-// Provider
 export function PropertyProvider({ children }: { children: ReactNode }) {
   const [filters, setFilters] = useState<FilterState>(initialFilters);
   const [isNavSearchVisible, setIsNavSearchVisible] = useState(false);
 
-  const updateFilter = (key: keyof FilterState, value: any) => {
-    setFilters(prev => ({ ...prev, [key]: value }));
+  const updateFilter = (key: keyof FilterState, value: string | number) => {
+    setFilters((prev) => ({ ...prev, [key]: value }));
   };
 
   return (
-    <PropertyContext.Provider value={{ 
-      filters, 
-      setFilters, 
-      updateFilter,
-      isNavSearchVisible, 
-      setIsNavSearchVisible 
-    }}>
+    <PropertyContext.Provider
+      value={{ filters, setFilters, updateFilter, isNavSearchVisible, setIsNavSearchVisible }}
+    >
       {children}
     </PropertyContext.Provider>
   );
 }
 
-// Hook personalizado
 export function useProperty() {
   const context = useContext(PropertyContext);
   if (context === undefined) {

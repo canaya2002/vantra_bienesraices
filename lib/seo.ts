@@ -1,93 +1,64 @@
 import { Metadata } from 'next';
-import { Property } from '@/types';
+import { Property, BlogPost } from '@/types';
 
-// 1. Configuración Maestra con datos de E-E-A-T
 export const siteConfig = {
   name: 'Vantra Bienes Raíces',
   shortName: 'Vantra',
-  tagline: 'El Arte de Encontrar tu Hogar',
-  description: 'Curaduría inmobiliaria de lujo por Carlos Anaya Ruiz. Propiedades exclusivas, venta y renta en Ciudad de México, Monterrey y Guadalajara.',
-  url: 'https://vantra.mx', // IMPORTANTE: Cambiar al dominio real producción
+  tagline: 'Inmobiliaria de lujo en México',
+  description:
+    'Propiedades exclusivas en venta y renta en Ciudad de México, Monterrey y Guadalajara. Asesoría inmobiliaria personalizada para encontrar tu próximo hogar.',
+  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://vantra.mx',
   author: 'Carlos Anaya Ruiz',
-  authorUrl: 'https://vantra.mx/sobre-mi', // URL del perfil del autor (ideal para E-E-A-T)
   phone: '+52 55 5555 5555',
   email: 'contacto@vantra.mx',
   address: {
-    street: 'Av. Presidente Masaryk', // Dirección física real ayuda mucho al SEO Local
+    street: 'Av. Presidente Masaryk',
     city: 'Ciudad de México',
     region: 'CDMX',
     postalCode: '11560',
-    country: 'MX'
+    country: 'MX',
   },
   social: {
     instagram: 'https://instagram.com/vantra.mx',
     facebook: 'https://facebook.com/VantraInmobiliaria',
     linkedin: 'https://linkedin.com/company/vantra',
-    twitter: 'https://twitter.com/vantra_mx'
   },
-  // IDs de verificación (Terceros)
-  googleVerification: 'TU_CODIGO_DE_SEARCH_CONSOLE', // Te diré cómo obtenerlo abajo
 };
 
-export const baseKeywords = [
-  'inmobiliaria de lujo',
-  'bienes raíces México',
-  'Carlos Anaya Ruiz',
-  'propiedades exclusivas',
-  'agente inmobiliario de lujo',
-  'venta de casas premium',
-  'departamentos en polanco',
-  'residencias en san pedro',
-  'inversión inmobiliaria'
-];
-
-// 2. Generador de Metadata Base (Super Potenciado)
 export function generateMetadata(customMeta?: Partial<Metadata>): Metadata {
   return {
     metadataBase: new URL(siteConfig.url),
     title: {
       default: `${siteConfig.name} | ${siteConfig.tagline}`,
-      template: `%s | ${siteConfig.name}`, // Plantilla para páginas internas
+      template: `%s | ${siteConfig.name}`,
     },
     description: customMeta?.description || siteConfig.description,
-    keywords: baseKeywords.join(', '),
-    authors: [{ name: siteConfig.author, url: siteConfig.authorUrl }],
+    authors: [{ name: siteConfig.author }],
     creator: siteConfig.author,
     publisher: siteConfig.name,
-    formatDetection: {
-      email: false,
-      address: false,
-      telephone: false,
-    },
-    // Verificación para herramientas de Webmaster
-    verification: {
-      google: siteConfig.googleVerification,
-    },
-    alternates: {
-      canonical: '/', // Se sobreescribe en páginas internas
-    },
+    formatDetection: { email: false, address: false, telephone: false },
+    alternates: { canonical: '/' },
     openGraph: {
       type: 'website',
       locale: 'es_MX',
       url: siteConfig.url,
       siteName: siteConfig.name,
-      title: customMeta?.title as string || siteConfig.name,
-      description: customMeta?.description as string || siteConfig.description,
+      title: (customMeta?.title as string) || siteConfig.name,
+      description: (customMeta?.description as string) || siteConfig.description,
       images: [
         {
-          url: '/images/og-image.jpg', // Asegúrate de tener esta imagen en public/images/
+          url: '/images/og-image.jpg',
           width: 1200,
           height: 630,
-          alt: `${siteConfig.name} - ${siteConfig.tagline}`
-        }
-      ]
+          alt: `${siteConfig.name} – ${siteConfig.tagline}`,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
-      title: customMeta?.title as string || siteConfig.name,
-      description: customMeta?.description as string || siteConfig.description,
-      creator: '@vantra_mx', // Tu usuario de twitter si tienes
-      images: ['/images/og-image.jpg']
+      title: (customMeta?.title as string) || siteConfig.name,
+      description: (customMeta?.description as string) || siteConfig.description,
+      images: ['/images/og-image.jpg'],
     },
     robots: {
       index: true,
@@ -100,67 +71,60 @@ export function generateMetadata(customMeta?: Partial<Metadata>): Metadata {
         'max-snippet': -1,
       },
     },
-    ...customMeta
+    ...customMeta,
   };
 }
 
-// 3. Generador Metadata para Propiedades (Canonical dinámico + OG Images)
 export function generatePropertyMetadata(property: Property): Metadata {
-  const title = `${property.title} | ${property.city}`;
-  const description = `${property.shortDescription} Ubicada en ${property.neighborhood}. Precio: ${property.priceFormatted}. Contacta a Carlos Anaya Ruiz.`;
-  
-  // Usamos la imagen principal de la propiedad para compartir en redes
-  const ogImage = property.mainImage;
-
+  const title = `${property.title} | ${property.neighborhood}, ${property.city}`;
+  const description = `${property.shortDescription} Precio: ${property.priceFormatted}. ${property.bedrooms} recámaras, ${property.bathrooms} baños, ${property.squareMeters} m².`;
   return {
     title,
     description,
-    keywords: [
-      ...baseKeywords,
-      property.city,
-      property.neighborhood,
-      property.propertyType,
-      `venta de ${property.propertyType.toLowerCase()}`,
-      property.address
-    ].join(', '),
-    alternates: {
-      canonical: `/propiedades/${property.slug}`,
-    },
+    alternates: { canonical: `/propiedades/${property.slug}` },
     openGraph: {
-      type: 'article', // 'article' o 'website'
+      type: 'article',
       locale: 'es_MX',
       url: `${siteConfig.url}/propiedades/${property.slug}`,
       siteName: siteConfig.name,
       title,
       description,
-      images: [
-        {
-          url: ogImage,
-          width: 1200,
-          height: 630,
-          alt: property.title
-        }
-      ],
-      authors: [siteConfig.author],
+      images: [{ url: property.mainImage, width: 1200, height: 630, alt: property.title }],
       publishedTime: property.createdAt,
       modifiedTime: property.updatedAt,
     },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: [ogImage]
-    }
+    twitter: { card: 'summary_large_image', title, description, images: [property.mainImage] },
   };
 }
 
-// --- SCHEMA.ORG GENERATORS (DATOS ESTRUCTURADOS) ---
+export function generateBlogMetadata(post: BlogPost): Metadata {
+  const title = post.title;
+  const description = post.excerpt;
+  return {
+    title,
+    description,
+    alternates: { canonical: `/blog/${post.slug}` },
+    openGraph: {
+      type: 'article',
+      locale: 'es_MX',
+      url: `${siteConfig.url}/blog/${post.slug}`,
+      siteName: siteConfig.name,
+      title,
+      description,
+      images: [{ url: post.image, width: 1200, height: 630, alt: post.imageAlt }],
+      publishedTime: post.publishedAt,
+      modifiedTime: post.updatedAt,
+    },
+    twitter: { card: 'summary_large_image', title, description, images: [post.image] },
+  };
+}
 
-// Schema de Organización (Para el Home)
+/* ── Schema.org Generators ─────────────────────────────────── */
+
 export function generateOrganizationSchema() {
   return {
     '@context': 'https://schema.org',
-    '@type': 'RealEstateAgent', // Más específico que Organization
+    '@type': 'RealEstateAgent',
     name: siteConfig.name,
     image: `${siteConfig.url}/images/vantralogo.png`,
     '@id': siteConfig.url,
@@ -172,72 +136,66 @@ export function generateOrganizationSchema() {
       streetAddress: siteConfig.address.street,
       addressLocality: siteConfig.address.city,
       postalCode: siteConfig.address.postalCode,
-      addressCountry: siteConfig.address.country
+      addressCountry: siteConfig.address.country,
     },
-    priceRange: '$$$$', // Indica que es lujo
-    founder: {
-      '@type': 'Person',
-      name: siteConfig.author,
-      url: siteConfig.authorUrl
-    },
-    sameAs: [
-      siteConfig.social.instagram,
-      siteConfig.social.facebook,
-      siteConfig.social.linkedin
-    ]
+    priceRange: '$$$$',
+    founder: { '@type': 'Person', name: siteConfig.author },
+    sameAs: [siteConfig.social.instagram, siteConfig.social.facebook, siteConfig.social.linkedin],
   };
 }
 
-// Schema de Propiedad Individual (Product / RealEstateListing)
+export function generateWebsiteSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: siteConfig.name,
+    url: siteConfig.url,
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: `${siteConfig.url}/propiedades?q={search_term_string}`,
+      'query-input': 'required name=search_term_string',
+    },
+  };
+}
+
 export function generatePropertySchema(property: Property) {
+  const isHouse = property.propertyType === 'Casa' || property.propertyType === 'Villa';
   return {
     '@context': 'https://schema.org',
     '@type': 'RealEstateListing',
     name: property.title,
-    description: property.description,
+    description: property.shortDescription,
     url: `${siteConfig.url}/propiedades/${property.slug}`,
-    image: property.images.map(img => `${siteConfig.url}${img.url}`),
+    image: property.images.map((img) => `${siteConfig.url}${img.url}`),
     datePosted: property.createdAt,
-    offer: {
+    offers: {
       '@type': 'Offer',
       price: property.price,
       priceCurrency: 'MXN',
       availability: 'https://schema.org/InStock',
       url: `${siteConfig.url}/propiedades/${property.slug}`,
-      seller: {
-        '@type': 'RealEstateAgent',
-        name: siteConfig.author,
-        image: `${siteConfig.url}/images/carlos-anaya.jpg`
-      }
+      seller: { '@type': 'RealEstateAgent', name: siteConfig.name },
     },
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: property.address,
-      addressLocality: property.city,
-      addressRegion: property.city,
-      addressCountry: 'MX'
+    about: {
+      '@type': isHouse ? 'House' : 'Apartment',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: property.address,
+        addressLocality: property.city,
+        addressCountry: 'MX',
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: property.coordinates.lat,
+        longitude: property.coordinates.lng,
+      },
+      numberOfRooms: property.bedrooms,
+      numberOfBathroomsTotal: property.bathrooms,
+      floorSize: { '@type': 'QuantitativeValue', value: property.squareMeters, unitCode: 'MTK' },
     },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: property.coordinates.lat,
-      longitude: property.coordinates.lng
-    },
-    numberOfRooms: property.bedrooms,
-    numberOfBathroomsTotal: property.bathrooms,
-    floorSize: {
-      '@type': 'QuantitativeValue',
-      value: property.squareMeters,
-      unitCode: 'MTK' // Metros Cuadrados
-    },
-    amenityFeature: property.features.map(feature => ({
-      '@type': 'LocationFeatureSpecification',
-      name: feature,
-      value: true
-    }))
   };
 }
 
-// Schema Breadcrumb (Migas de pan - Muy importante para Google)
 export function generateBreadcrumbSchema(items: { name: string; url: string }[]) {
   return {
     '@context': 'https://schema.org',
@@ -246,7 +204,51 @@ export function generateBreadcrumbSchema(items: { name: string; url: string }[])
       '@type': 'ListItem',
       position: index + 1,
       name: item.name,
-      item: `${siteConfig.url}${item.url}`
-    }))
+      item: `${siteConfig.url}${item.url}`,
+    })),
+  };
+}
+
+export function generateFAQSchema(faqs: { question: string; answer: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  };
+}
+
+export function generateArticleSchema(post: BlogPost) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.excerpt,
+    image: `${siteConfig.url}${post.image}`,
+    datePublished: post.publishedAt,
+    dateModified: post.updatedAt,
+    author: { '@type': 'Organization', name: siteConfig.name, url: siteConfig.url },
+    publisher: {
+      '@type': 'Organization',
+      name: siteConfig.name,
+      logo: { '@type': 'ImageObject', url: `${siteConfig.url}/images/vantralogo.png` },
+    },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `${siteConfig.url}/blog/${post.slug}` },
+  };
+}
+
+export function generateItemListSchema(items: { name: string; url: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      url: `${siteConfig.url}${item.url}`,
+    })),
   };
 }

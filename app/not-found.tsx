@@ -1,46 +1,27 @@
 import Link from 'next/link';
-import { Metadata } from 'next'; // Importación añadida
-import { ArrowLeft, Home } from 'lucide-react';
+import { Metadata } from 'next';
+import { Home } from 'lucide-react';
 
-// Metadata para la página 404
 export const metadata: Metadata = {
-  title: 'Página no encontrada | Vantra',
-  description: 'Lo sentimos, la propiedad que buscas no está disponible.',
-  robots: {
-    index: false, // IMPORTANTE: No queremos indexar errores
-    follow: false,
-  },
+  title: 'Página no encontrada',
+  robots: { index: false, follow: false },
 };
 
 export default function NotFound() {
   return (
-    <div className="min-h-[70vh] flex flex-col items-center justify-center text-center px-4 bg-vantra-gray-50">
+    <div className="min-h-[70vh] flex flex-col items-center justify-center text-center px-4 bg-vantra-gray-50 pt-24">
       <h1 className="font-display text-9xl font-bold text-vantra-gold/20 select-none">404</h1>
-      
       <div className="relative -mt-12 z-10">
-        <h2 className="heading-2 text-vantra-midnight mb-4">
-          Página no encontrada
-        </h2>
-        <p className="paragraph max-w-md mx-auto mb-8">
-          Lo sentimos, la propiedad o página que estás buscando no existe o ha sido movida.
+        <h2 className="font-display text-3xl font-semibold text-vantra-midnight mb-4">Página no encontrada</h2>
+        <p className="text-vantra-gray-600 max-w-md mx-auto mb-8">
+          La propiedad o página que buscas no existe o ha sido movida.
         </p>
-        
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link 
-            href="/" 
-            className="btn-primary"
-          >
-            <Home className="w-5 h-5 mr-2" />
-            Ir al Inicio
-          </Link>
-          <Link 
-            href="/#propiedades" 
-            className="btn-secondary"
-          >
-            <ArrowLeft className="w-5 h-5 mr-2" />
-            Ver Propiedades
-          </Link>
-        </div>
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-vantra-gold to-vantra-gold-dark text-white font-semibold rounded-full shadow-gold"
+        >
+          <Home className="w-5 h-5" /> Ir al Inicio
+        </Link>
       </div>
     </div>
   );

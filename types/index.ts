@@ -6,7 +6,9 @@ export interface Property {
   shortDescription: string;
   price: number;
   priceFormatted: string;
-  city: 'Ciudad de México' | 'Monterrey' | 'Guadalajara';
+  operation: 'venta' | 'renta';
+  city: string;
+  citySlug: string;
   neighborhood: string;
   address: string;
   squareMeters: number;
@@ -14,7 +16,7 @@ export interface Property {
   bathrooms: number;
   parkingSpaces: number;
   yearBuilt: number;
-  propertyType: 'Casa' | 'Departamento' | 'Penthouse' | 'Terreno';
+  propertyType: 'Casa' | 'Departamento' | 'Penthouse' | 'Terreno' | 'Villa' | 'Loft';
   features: string[];
   images: PropertyImage[];
   mainImage: string;
@@ -36,6 +38,34 @@ export interface PropertyImage {
   order: number;
 }
 
+export interface CityData {
+  slug: string;
+  name: string;
+  state: string;
+  description: string;
+  shortDescription: string;
+  image: string;
+  propertyCount?: number;
+}
+
+export interface BlogPost {
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  image: string;
+  imageAlt: string;
+  author: string;
+  category: string;
+  publishedAt: string;
+  updatedAt: string;
+}
+
+export interface FAQ {
+  question: string;
+  answer: string;
+}
+
 export interface FilterState {
   city: string;
   minPrice: number;
@@ -44,6 +74,7 @@ export interface FilterState {
   maxSquareMeters: number;
   bedrooms: number;
   propertyType: string;
+  operation: string;
 }
 
 export interface ContactFormData {
@@ -51,14 +82,7 @@ export interface ContactFormData {
   email: string;
   phone: string;
   message: string;
+  consent: boolean;
   propertyId?: string;
   propertyTitle?: string;
-}
-
-export interface SEOMetadata {
-  title: string;
-  description: string;
-  keywords: string[];
-  ogImage?: string;
-  canonical?: string;
 }

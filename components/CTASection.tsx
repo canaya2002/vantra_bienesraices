@@ -1,125 +1,72 @@
 'use client';
 
+import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { Phone, Mail, MapPin, MessageCircle } from 'lucide-react';
 import ContactForm from './ContactForm';
-import { Phone, Mail, MapPin, Clock, Instagram, Facebook } from 'lucide-react';
 
 const contactInfo = [
-  {
-    icon: Phone,
-    label: 'Teléfono',
-    value: '+52 55 5555 5555',
-    href: 'tel:+525555555555',
-  },
-  {
-    icon: Mail,
-    label: 'Email',
-    value: 'contacto@vantra.mx',
-    href: 'mailto:contacto@vantra.mx',
-  },
-  {
-    icon: MapPin,
-    label: 'Ubicación',
-    value: 'Ciudad de México, México',
-    href: '#',
-  },
-  {
-    icon: Clock,
-    label: 'Horario',
-    value: 'Lun - Sáb: 9:00 - 19:00',
-    href: '#',
-  },
+  { icon: Phone, label: 'Teléfono', value: '+52 55 5555 5555', href: 'tel:+525555555555' },
+  { icon: Mail, label: 'Email', value: 'contacto@vantra.mx', href: 'mailto:contacto@vantra.mx' },
+  { icon: MapPin, label: 'Ubicación', value: 'CDMX · Monterrey · Guadalajara', href: '#' },
 ];
 
 export default function CTASection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const whatsappUrl = `https://wa.me/525555555555?text=${encodeURIComponent('Hola, me interesa una propiedad de Vantra.')}`;
 
   return (
-    <section id="contacto" className="section-padding bg-white" ref={ref}>
-      <div className="container-custom">
+    <section id="contacto" className="px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 bg-white">
+      <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
-          {/* Left Column - Info */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
           >
-            <span className="text-vantra-gold font-medium tracking-wider uppercase text-sm">
-              Contacto
-            </span>
-            
-            <h2 className="heading-2 text-vantra-midnight mt-4 mb-6">
-              ¿Listo para encontrar tu hogar ideal?
+            <span className="text-vantra-gold font-medium tracking-wider uppercase text-sm">Contacto</span>
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-vantra-midnight mt-4 mb-6">
+              ¿Buscas tu próxima propiedad?
             </h2>
-            
-            <p className="paragraph mb-8">
-              Cuéntame sobre tu proyecto inmobiliario. Ya sea que busques comprar, vender 
-              o invertir en propiedades de lujo, estoy aquí para ayudarte a hacer realidad 
-              tus objetivos.
+            <p className="text-vantra-gray-600 text-lg mb-8 leading-relaxed">
+              Cuéntanos sobre tu proyecto inmobiliario. Un asesor te orienta sin compromiso para encontrar la opción que se ajuste a tus necesidades.
             </p>
-
-            {/* Contact Info Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-              {contactInfo.map((item, index) => (
-                <motion.a
+            <div className="space-y-4 mb-8">
+              {contactInfo.map((item) => (
+                <a
                   key={item.label}
                   href={item.href}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
                   className="flex items-start gap-4 p-4 bg-vantra-gray-50 rounded-xl hover:bg-vantra-gold/5 transition-colors group"
                 >
-                  <div className="w-10 h-10 bg-vantra-gold/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-vantra-gold/20 transition-colors">
+                  <div className="w-10 h-10 bg-vantra-gold/10 rounded-lg flex items-center justify-center flex-shrink-0">
                     <item.icon className="w-5 h-5 text-vantra-gold" />
                   </div>
                   <div>
                     <p className="text-sm text-vantra-gray-500">{item.label}</p>
                     <p className="text-vantra-midnight font-medium">{item.value}</p>
                   </div>
-                </motion.a>
+                </a>
               ))}
             </div>
-
-            {/* Social Links */}
-            <div>
-              <p className="text-sm text-vantra-gray-500 mb-3">Síguenos en redes sociales</p>
-              <div className="flex gap-3">
-                <a
-                  href="https://instagram.com/vantra.mx"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 bg-vantra-gray-100 rounded-lg flex items-center justify-center text-vantra-gray-600 hover:bg-vantra-gold hover:text-white transition-colors"
-                  aria-label="Instagram"
-                >
-                  <Instagram className="w-5 h-5" />
-                </a>
-                <a
-                  href="https://facebook.com/VantraInmobiliaria"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 bg-vantra-gray-100 rounded-lg flex items-center justify-center text-vantra-gray-600 hover:bg-vantra-gold hover:text-white transition-colors"
-                  aria-label="Facebook"
-                >
-                  <Facebook className="w-5 h-5" />
-                </a>
-              </div>
-            </div>
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#25D366] text-white font-semibold rounded-full hover:bg-[#1EB954] transition-colors"
+            >
+              <MessageCircle className="w-5 h-5" />
+              Escríbenos por WhatsApp
+            </a>
           </motion.div>
 
-          {/* Right Column - Form */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
             className="bg-white rounded-2xl shadow-soft-lg p-6 sm:p-8 border border-vantra-gray-100"
           >
             <h3 className="text-xl font-display font-semibold text-vantra-midnight mb-6">
               Envíanos un mensaje
             </h3>
-            {/* Como las props ahora son opcionales en ContactForm, esto ya no da error */}
             <ContactForm />
           </motion.div>
         </div>
