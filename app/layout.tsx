@@ -3,6 +3,7 @@ import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
+import { Analytics } from "@vercel/analytics/next";
 import { generateMetadata as generateBaseMetadata, generateOrganizationSchema, generateWebsiteSchema } from '@/lib/seo';
 
 export const metadata: Metadata = generateBaseMetadata();
@@ -31,6 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main className="flex-grow">{children}</main>
         <Footer />
         <WhatsAppButton />
+        <Analytics/>
       </body>
     </html>
   );
